@@ -2,10 +2,14 @@ from bottle import get, post, request, run, route, template, static_file
 import json
 
 
+
 @route('/')
 def index():
     return template('views/index.tpl')
 
+@route('/generator')
+def generator():
+    return template('static/templete/generator.html')
 
 @get("/static/css/<filepath:re:.*\.css>")
 def css(filepath):
@@ -43,4 +47,4 @@ def do_login():
         json.dump(data_frame, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
-    run(host="localhost", port=8080, debug=True, reloader=True)
+    run(host="127.0.0.1", port=8080, debug=True, reloader=True)

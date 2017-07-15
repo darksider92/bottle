@@ -1,23 +1,33 @@
+from collections import defaultdict
 import json
+question_test = defaultdict(list)
+
+with open('test1', mode='r', encoding='utf-8') as f:
+    # Защита от дурака которая проверяет чтобы в файле сначала была
+    # строка с вопросом
+    question = None
+
+    for line in f:
+        # Удаление ' ', '\n', '\t', '\r' из начала и конца строки
+        line = line.strip()
+
+        # Защита от дурака которая проверяет чтобы строка не была пустой
+        if not line:
+            continue
+
+        type_line = line[0]
+        if type_line == '!':
+            question = line[1:]
+            continue
+
+        if type_line not in '-+':
+            continue
+
+        if not question:
+            continue
+
+        question_test[question].append(line)
 
 
-with open("test1", "r", encoding="utf-8") as file:
-    with open("test.json", "w", encoding="utf-8") as f:
-        question_test = dict()
-        answer_list = list()
-        for line in file.readlines():
-            if line[0] == "!":
-                qwestion = line
-                question_test[qwestion] = []
-            elif line[0] == "-":
-                false_answer = line
-                answer_list.append(false_answer)
-                negative_answer = line
-            elif line[0] == "+":
-                tru_anser = line
-                answer_list.append(tru_anser)
-            elif line[0] == "#":
-                del answer_list[:]
-            question_test[qwestion] = answer_list
-        json.dump(question_test, f, ensure_ascii=False, indent=2)
-
+with open("test.json", "w", encoding="utf-8") as file:
+    json.dump(question_test, file,ensure_ascii=False, indent=4)

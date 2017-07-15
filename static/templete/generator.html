@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <ul>
+        <li>
+            <div id="answers">
+            %import json
+            %import os
+            %path2 = "/home/dark/fraemwork_bottle/bottle/static/templete/"
+            %with open(os.path.join(path2, "test.json"), encoding="utf-8") as data_file:
+                %data = json.load(data_file)
+                %for k, v in data.items():
+                <span>{{k[1:]}}</span><br>
+                    %for i in v:
+                        %if i[0] == "+":
+                            <input type="radio" name="answer{{k[0]}}" value="1"><span>{{i[1:]}}</span><br>
+                        %elif i[0] == "-":
+                            <input type="radio" name="answer{{k[0]}}" value="0"><span>{{i[1:]}}</span><br>
+                    %end
+                 %end
+            </div>
+        </li>
+    </ul>
+</body>
+</html>
